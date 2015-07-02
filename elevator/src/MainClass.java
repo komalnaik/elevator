@@ -2,12 +2,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
-public class Main_Class {
+public class MainClass {
 
 	public static void main(String[] args) {
 		
 		
-		Elevetor_controller e=new Elevetor_controller();
+		Building e=new Building();
 		
 		Scanner sc=new Scanner(System.in);
 		System.out.println("Enter current floor of elevetor ");
@@ -19,6 +19,7 @@ public class Main_Class {
 			System.out.println("Enter which floor you want to move");
 			e.pressPanelButton(sc.nextInt());
 			e.MoveTofloor();
+			System.out.println("Current floor of elevetor: "+e.getElevetorFloor());
 		}
 		else{
 			System.out.println("cannot move to requested floor");

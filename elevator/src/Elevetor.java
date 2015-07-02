@@ -1,46 +1,37 @@
+import java.util.ArrayList;
+
 
 
 public class Elevetor {
-	Floor currentFloor;
-	Elevetor_door doorOpen;
-	Pannel button_pannel;
-	String current_state;
+	private Floor currentFloor;
+	private ElevetorDoor doorOpen;
+	private Pannel button_pannel;
+	private String current_state;
 		
 	public Elevetor(Floor currentFloor,int n) {
 		super();
 		this.currentFloor = currentFloor;
-		this.doorOpen = new Elevetor_door();
+		this.doorOpen = new ElevetorDoor();
 		this.button_pannel = new Pannel(n);
 		this.current_state = "idle";
 	}
 	
-	public Pannel getButton_pannel() {
-		return button_pannel;
-	}
-
-	public void setButton_pannel(Pannel button_pannel) {
-		this.button_pannel = button_pannel;
-	}
-
 	public String getCurrent_state() {
 		return current_state;
 	}
 
-	public void setCurrent_state(String current_state) {
-		this.current_state = current_state;
-	}
-
-	public void goUp(){
-			int curentIndex=currentFloor.getFloor_number();
-			current_state="up";
-			System.out.println("Elevetor is moving up ");
-		
+	private void goUp(ArrayList<Floor> floorList,int dest){
+		current_state="up";
+		while(currentFloor.getFloor_number()<dest){
+			setCurrentFloor(floorList.get(currentFloor.getFloor_number()+1));
+		}
 	}
 	
-	public void goDown(){
-			int curentIndex=currentFloor.getFloor_number();
+	private void goDown(ArrayList<Floor> floorList,int dest){
 			current_state="down";
-			System.out.println("Elevetor is moving down ");
+			while(currentFloor.getFloor_number()>dest){
+				setCurrentFloor(floorList.get(currentFloor.getFloor_number()+1));
+			}
 		
 	}
 	
@@ -50,11 +41,11 @@ public class Elevetor {
 
 	public void setCurrentFloor(Floor currentFloor) {
 		this.currentFloor = currentFloor;
-		System.out.println("Elevetor is now at "+currentFloor.getFloor_number()+" floor");
 	}
 	
 	public void pressPannelButton(int n){
 		button_pannel.setButton(n);
+		close_door();
 	}
 	
 	public int getPannelButton(){
@@ -62,12 +53,27 @@ public class Elevetor {
 	}
 	public void open_door(){
 		current_state="idle";
-		doorOpen.setDoor_open(true);
+		doorOpen.openDoor();
 	}
 	public void close_door(){
-		doorOpen.setDoor_open(false);
+		doorOpen.closeDoor();
 	}
 	public boolean isDoorOpen(){
 		return doorOpen.isDoor_open();
+	}
+	public int getFloorNumber(){
+		return currentFloor.getFloor_number();
+	}
+	
+	public void move(int requested_floor,ArrayList<Floor> Floor_list) {
+		if(getFloorNumber()< requested_floor){
+			goUp(Floor_list, requested_floor);
+		}
+		if(getFloorNumber()>requested_floor){
+			goDown(Floor_list, requested_floor);
+		}
+		if(getFloorNumber()==requested_floor){
+			open_door();
+		}
 	}
 }

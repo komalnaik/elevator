@@ -1,9 +1,7 @@
 
-public abstract class  floor_button {
+public abstract class  FloorButton {
 	boolean pressed;
 	
-	
-
 	public boolean isPressed() {
 		return pressed;
 	}

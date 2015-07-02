@@ -8,3 +8,9 @@
 /Main_Class.class
 /Pannel.class
 /floor_button.class
+/ElevetorController.class
+/ElevetorDoor.class
+/FloorButton.class
+/MainClass.class
+/FloorButtonFactory.class
+/Building.class

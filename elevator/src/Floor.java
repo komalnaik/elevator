@@ -1,7 +1,7 @@
 
 public class Floor {
 	int floor_number;
-	floor_button button_pressed;
+	FloorButton button_pressed;
 	
 	public Floor(int floor_number) {
 		super();
@@ -17,19 +17,13 @@ public class Floor {
 	}
 	
 	public String getPressedButton(){
-		if(button_pressed instanceof Floor_up_button)return "up";
-		if(button_pressed instanceof Floor_down_button)return "down"; 
+		if(button_pressed instanceof Floor_up_button){return "up";}
+		if(button_pressed instanceof Floor_down_button){return "down";}
 		return null;
 	}
 	
-	public void pressUp(){
-		button_pressed=new Floor_up_button();
-		button_pressed.setPressed(true);
-	}
-	
-	public void pressDown(){
-		//System.out.println("000000000000000000000");
-		button_pressed=new Floor_down_button();
-		button_pressed.setPressed(true);
+	public void pressButton(String s) {
+		FloorButtonFactory f=new FloorButtonFactory();
+		button_pressed=f.getFloorButton(s);
 	}
 }
