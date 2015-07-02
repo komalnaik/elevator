@@ -3,36 +3,40 @@ import java.util.ArrayList;
 
 
 public class Elevetor {
+	static Elevetor myInstance=null;
 	private Floor currentFloor;
 	private ElevetorDoor doorOpen;
 	private Pannel button_pannel;
 	private String current_state;
 		
-	public Elevetor(Floor currentFloor,int n) {
+	private Elevetor(Floor currentFloor,int n) {
 		super();
 		this.currentFloor = currentFloor;
 		this.doorOpen = new ElevetorDoor();
 		this.button_pannel = new Pannel(n);
 		this.current_state = "idle";
 	}
+	public static Elevetor getInstance(Floor currentFloor,int n){
+		if(myInstance==null){
+			myInstance=new Elevetor(currentFloor, n);
+		}
+		return myInstance;
+		
+	}
 	
 	public String getCurrent_state() {
 		return current_state;
 	}
 
-	private void goUp(ArrayList<Floor> floorList,int dest){
+	private void goUp(Floor requested_floor){
 		current_state="up";
-		while(currentFloor.getFloor_number()<dest){
-			setCurrentFloor(floorList.get(currentFloor.getFloor_number()+1));
-		}
+		setCurrentFloor(requested_floor);
+
 	}
 	
-	private void goDown(ArrayList<Floor> floorList,int dest){
+	private void goDown(Floor requested_floor){
 			current_state="down";
-			while(currentFloor.getFloor_number()>dest){
-				setCurrentFloor(floorList.get(currentFloor.getFloor_number()+1));
-			}
-		
+			setCurrentFloor(requested_floor);
 	}
 	
 	public Floor getCurrentFloor() {
@@ -65,15 +69,25 @@ public class Elevetor {
 		return currentFloor.getFloor_number();
 	}
 	
-	public void move(int requested_floor,ArrayList<Floor> Floor_list) {
-		if(getFloorNumber()< requested_floor){
-			goUp(Floor_list, requested_floor);
+	public void move(Floor requested_floor) {
+		if(getFloorNumber()< requested_floor.getFloor_number()){
+			goUp(requested_floor);
 		}
-		if(getFloorNumber()>requested_floor){
-			goDown(Floor_list, requested_floor);
+		if(getFloorNumber()>requested_floor.getFloor_number()){
+			goDown( requested_floor);
 		}
-		if(getFloorNumber()==requested_floor){
+		if(getFloorNumber()==requested_floor.getFloor_number()){
 			open_door();
 		}
+	}
+
+	public void moveToReq(Floor requested_floor) {
+			String userReq=requested_floor.getPressedButton();
+			String elevetorState=getCurrent_state();
+			 if(userReq.equals(elevetorState) || elevetorState.equals("idle")){
+						move(requested_floor);
+						
+			  }	
+				
 	}
 }

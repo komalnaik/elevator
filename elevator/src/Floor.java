@@ -2,10 +2,11 @@
 public class Floor {
 	int floor_number;
 	FloorButton button_pressed;
-	
-	public Floor(int floor_number) {
+	Elevetor elevtor;
+	public Floor(int floor_number,Elevetor e) {
 		super();
 		this.floor_number = floor_number;
+		elevtor=e;
 	}
 
 	public int getFloor_number() {
@@ -25,5 +26,6 @@ public class Floor {
 	public void pressButton(String s) {
 		FloorButtonFactory f=new FloorButtonFactory();
 		button_pressed=f.getFloorButton(s);
+		elevtor.moveToReq(this);
 	}
 }

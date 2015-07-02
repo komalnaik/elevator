@@ -13,8 +13,8 @@ public class MainClass {
 		System.out.println("Enter current floor of elevetor ");
 		e.setElevetorFloor(sc.nextInt());
 		
-		System.out.println("Enter your current floor number");
-		System.out.println("Enter where you want to go up /down");
+		System.out.print("Enter your current floor number");
+		System.out.println(" and where you want to go up /down");
 		if(e.requestFrom(sc.nextInt(),sc.next())){
 			System.out.println("Enter which floor you want to move");
 			e.pressPanelButton(sc.nextInt());
